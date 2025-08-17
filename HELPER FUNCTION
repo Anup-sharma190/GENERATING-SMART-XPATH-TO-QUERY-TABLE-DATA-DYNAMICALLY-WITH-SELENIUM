@@ -1,0 +1,44 @@
+"""
+helper_functions.py
+-------------------
+Reusable helper functions for Selenium automation project.
+"""
+
+import time
+from selenium.webdriver.common.by import By
+
+def wait_and_click(driver, by_locator, timeout=10):
+    """
+    Wait for an element to be clickable and then click it.
+    """
+    end_time = time.time() + timeout
+    while time.time() < end_time:
+        try:
+            element = driver.find_element(*by_locator)
+            element.click()
+            return True
+        except:
+            time.sleep(0.5)
+    return False
+
+def enter_text(driver, by_locator, text, timeout=10):
+    """
+    Wait for an element to be visible and enter text.
+    """
+    end_time = time.time() + timeout
+    while time.time() < end_time:
+        try:
+            element = driver.find_element(*by_locator)
+            element.clear()
+            element.send_keys(text)
+            return True
+        except:
+            time.sleep(0.5)
+    return False
+
+def read_excel(file_path, sheet_name):
+    """
+    Read Excel file and return as a pandas DataFrame.
+    """
+    import pandas as pd
+    return pd.read_excel(file_path, sheet_name=sheet_name)
